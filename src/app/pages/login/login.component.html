@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="col-sm-10 col-md-6 d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
+    <div class="login-form login-signin w-100">
+      <div class="text-center mb-10 mb-lg-20">
+        <h3 class="font-size-h1">Login</h3>
+        <p class="text-muted font-weight-bold">Digite seu usuário e senha</p>
+      </div>
+
+      <form
+        class="form w-100"
+        [formGroup]="loginForm"
+        autocomplete="off"
+        novalidate="novalidate"
+      >
+        <div class="form-group w-100">
+          <mat-form-field class="w-100">
+            <mat-label>E-mail</mat-label>
+            <input
+              matInput
+              type="email"
+              placeholder="Informe seu E-mail"
+              formControlName="email"
+              autocomplete="off"
+            />
+            <mat-error *ngIf="isControlHasError('email', 'required')">
+              <strong>Campo obrigatório</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('email', 'email')">
+              <strong>Campo inválido</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('email', 'minlength')">
+              <strong>O E-mail deve possuir ao menos 3 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('email', 'maxlength')">
+              <strong>O E-mail não deve possuir mais de 320 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group w-100">
+          <mat-form-field class="w-100">
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              type="pass"
+              placeholder="Informe sua senha"
+              formControlName="pass"
+              autocomplete="off"
+            />
+            <mat-error *ngIf="isControlHasError('pass', 'required')">
+              <strong>Informe sua senha</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('pass', 'minlength')">
+              <strong>A senha deve possuir ao menos 3 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('pass', 'maxlength')">
+              <strong>O E-mail não deve possuir mais de 100 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group d-flex flex-wrap justify-content-end align-items-center">
+          <button mat-raised-button color="primary" (click)="submit()">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
