@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.dialog-task {
+  width: 500px;
+  height: auto;
+
+  .form {
+    form {
+      flex-direction: column;
+      display: flex;
+      width: 100%;
+
+      mat-form-field {
+        width: -webkit-fill-available;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

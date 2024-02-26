@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -36,8 +37,8 @@ export class UserService {
   }
 
   private mockUsuarioLogin(usuario: UserInterface): Observable<any> {
-    var retornoMock: any = [];
-    if (usuario.email === 'hello@balta.io' && usuario.pass == '1234') {
+    const retornoMock: any = [];
+    if (usuario.email === 'hello@teste.com' && usuario.pass == '1234') {
       retornoMock.sucesso = true;
       retornoMock.usuario = usuario;
       retornoMock.token = 'TokenQueSeriaGeradoPelaAPI';
@@ -65,7 +66,7 @@ export class UserService {
     return JSON.stringify(localStorage.getItem('token'));
   }
 
-  get logado(): boolean {
+  get authenticated(): boolean {
     return localStorage.getItem('token') ? true : false;
   }
 }

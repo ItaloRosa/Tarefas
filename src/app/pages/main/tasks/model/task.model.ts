@@ -1,9 +1,11 @@
+import { TaskStatusEnum } from "../enums/task-status.enum";
+
 export interface TaskModel {
-  _id: string;
+  id: string;
   titulo: string;
   descricao: string;
-  dataCriacao: Date;
+  dataCriacao: string;
   tags: Array<string>;
   responsavel: string;
-  status: 'TODO' | 'DOING' | 'DONE';
+  status: TaskStatusEnum;
 }

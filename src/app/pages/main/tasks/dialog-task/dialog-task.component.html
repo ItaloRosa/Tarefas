@@ -1,0 +1,86 @@
+<div class="dialog-task">
+  <h2 mat-dialog-title>{{ editTask ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+  <mat-dialog-content class="pt-2 w-100">
+    <div class="form">
+      <form class="w-100" [formGroup]="form" autocomplete="off" novalidate="novalidate">
+        <div class="form-group w-100">
+          <mat-form-field>
+            <mat-label>Títuto</mat-label>
+            <input matInput type="text" formControlName="titulo" maxlength="100" minlength="3" />
+            <mat-error *ngIf="isControlHasError('titulo', 'required')">
+              <strong>Campo obrigatório</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('titulo', 'minlength')">
+              <strong>O título deve possuir ao menos 3 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('titulo', 'maxlength')">
+              <strong>O título não deve possuir mais de 100 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea matInput type="text" formControlName="descricao" maxlength="600" minlength="5"></textarea>
+            <mat-error *ngIf="isControlHasError('descricao', 'required')">
+              <strong>Campo obrigatório</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('descricao', 'minlength')">
+              <strong>A descrição deve possuir ao menos 5 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('descricao', 'maxlength')">
+              <strong>A descrição não deve possuir mais de 600 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Responsável</mat-label>
+            <input matInput type="text" formControlName="responsavel" maxlength="30" minlength="2" />
+            <mat-error *ngIf="isControlHasError('responsavel', 'minlength')">
+              <strong>O responsável deve possuir ao menos 2 caracteres</strong>
+            </mat-error>
+            <mat-error *ngIf="isControlHasError('responsavel', 'maxlength')">
+              <strong>O responsável não deve possuir mais de 30 caracteres</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="chip-list">
+            <mat-label>Tags</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Insira a tag">
+              @for (tag of tags; track tag) {
+              <mat-chip-row (removed)="remove(tag)" [editable]="true" (edited)="edit(tag, $event)"
+                [aria-description]="'presione Enter para editar ' + tag">
+                {{tag}}
+                <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              }
+              <input placeholder="Nova Tag" [matChipInputFor]="chipGrid"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" />
+            </mat-chip-grid>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="TODO">To Do</mat-option>
+              <mat-option value="DOING">Doing</mat-option>
+              <mat-option value="DONE">Done</mat-option>
+            </mat-select>
+            <mat-error *ngIf="isControlHasError('status', 'required')">
+              <strong>Campo obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="pb-3" align="end">
+    <button mat-flat-button color="accent" class="mx-2" (click)="cancel()">Cancelar</button>
+    <button mat-flat-button color="primary" class="mx-2" (click)="save()" [disabled]="!form.valid">Salvar</button>
+  </mat-dialog-actions>
+  <mat-card-footer>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</div>

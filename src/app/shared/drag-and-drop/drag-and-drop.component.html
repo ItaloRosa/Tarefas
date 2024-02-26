@@ -1,0 +1,121 @@
+<div class="drag-drop mt-3 grid">
+  <div class="colunm-container g-col-6 g-col-md-4 border-right">
+    <h2 class="text-center">To do</h2>
+
+    <div
+      id="todo"
+      class="item-list"
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="[doingList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of todo; track item) {
+      <mat-card appHighlightMouse cdkDrag class="card-task">
+        <mat-card-header>
+          <mat-card-title> {{ item.titulo }} </mat-card-title>
+          <mat-card-subtitle class="d-flex">
+            <p *ngFor="let tag of item.tags" class="mx-1">#{{tag}}</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="description">
+            <p> {{ item.descricao }}</p>
+          </div>
+          <div class="date">
+            <p> Data da criação: {{ item.dataCriacao | date: 'dd/MM/YYYY HH:MM' }}</p>
+          </div>
+          <div class="responsible">
+            <p class="mt-3 mb-1">Responsável: <b>{{ item.responsavel }}</b></p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="editItem(item)">Editar</button>
+          <button mat-button (click)="deleteItem(item.id)">Excluir</button>
+        </mat-card-actions>
+      </mat-card>
+      }
+    </div>
+  </div>
+
+  <div class="colunm-container g-col-6 g-col-md-4 border-right">
+    <h2 class="text-center">Doing</h2>
+
+    <div
+    id="doing"
+      class="item-list"
+      cdkDropList
+      #doingList="cdkDropList"
+      [cdkDropListData]="doing"
+      [cdkDropListConnectedTo]="[todoList, doneList]"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of doing; track item) {
+        <mat-card appHighlightMouse cdkDrag class="card-task">
+          <mat-card-header>
+            <mat-card-title> {{ item.titulo }} </mat-card-title>
+            <mat-card-subtitle class="d-flex">
+              <p *ngFor="let tag of item.tags" class="mx-1">#{{tag}}</p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="description">
+              <p> {{ item.descricao }}</p>
+            </div>
+            <div class="date">
+              <p> Data da criação: {{ item.dataCriacao | date: 'dd/MM/YYYY HH:MM' }}</p>
+            </div>
+            <div class="responsible">
+              <p class="mt-3 mb-1">Responsável: <b>{{ item.responsavel }}</b></p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button (click)="editItem(item)">Editar</button>
+            <button mat-button (click)="deleteItem(item.id)">Excluir</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+
+  <div class="colunm-container g-col-6 g-col-md-4">
+    <h2 class="text-center">Done</h2>
+
+    <div
+    id="done"
+      class="item-list"
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList, doingList]"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for (item of done; track item) {
+        <mat-card appHighlightMouse cdkDrag class="card-task">
+          <mat-card-header>
+            <mat-card-title> {{ item.titulo }} </mat-card-title>
+            <mat-card-subtitle class="d-flex">
+              <p *ngFor="let tag of item.tags" class="mx-1">#{{tag}}</p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="description">
+              <p> {{ item.descricao }}</p>
+            </div>
+            <div class="date">
+              <p> Data da criação: {{ item.dataCriacao | date: 'dd/MM/YYYY HH:MM' }}</p>
+            </div>
+            <div class="responsible">
+              <p class="mt-3 mb-1">Responsável: <b>{{ item.responsavel }}</b></p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button (click)="editItem(item)">Editar</button>
+            <button mat-button (click)="deleteItem(item.id)">Excluir</button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>

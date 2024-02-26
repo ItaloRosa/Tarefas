@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { CanAuthenticationGuard } from './services/guards/can-authentication.guard';
+import { AuthenticationGuard } from './services/guards/authentication.guard';
 
 export const routes: Routes = [
   {
@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [CanAuthenticationGuard],
+    canActivate: [AuthenticationGuard],
     loadChildren: () =>
       import('./pages/main/main.module').then((m) => m.MainModule),
   },

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,11 +12,6 @@ import { UserInterface } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user/user.service';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 
-const DEMO_PARAMS = {
-  EMAIL: 'hello@balta.io',
-  PASSWORD: '1234',
-};
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -25,19 +20,22 @@ const DEMO_PARAMS = {
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  errors: any = [];
   loading = false;
 
   constructor(private fb: FormBuilder, private userService: UserService) {
     this.initLoginForm();
   }
 
+  ngOnInit(): void {
+    this.userService.deslogar();
+  }
+
   initLoginForm() {
     this.loginForm = this.fb.group({
       email: [
-        DEMO_PARAMS.EMAIL,
+        '',
         Validators.compose([
           Validators.required,
           Validators.email,
@@ -46,7 +44,7 @@ export class LoginComponent {
         ]),
       ],
       pass: [
-        DEMO_PARAMS.PASSWORD,
+        '',
         Validators.compose([
           Validators.required,
           Validators.minLength(3),
