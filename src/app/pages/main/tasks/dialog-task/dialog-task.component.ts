@@ -1,10 +1,11 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import moment from 'moment';
+import { TaskService } from '../../../../services/tasks/task.service';
 import { TaskModel } from '../model/task.model';
 
 @Component({
@@ -22,19 +23,36 @@ export class DialogTaskComponent implements OnInit {
   announcer = inject(LiveAnnouncer);
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
+  taskData$!: TaskModel;
+
   constructor(
     private fb: FormBuilder,
+    private service: TaskService,
     public dialogRef: MatDialogRef<DialogTaskComponent>,
-    @Inject(MAT_DIALOG_DATA) public taskData: TaskModel,
+    //@Inject(MAT_DIALOG_DATA) public taskData: TaskModel,
   ) {
-    if(!taskData) this.editTask = true;
+    //if(!taskData) this.editTask = true;
   }
 
   ngOnInit(): void {
-    if (this.taskData.id) {
-      this.form = this.initForm(this.taskData)
-      this.tags = this.taskData.tags;
-    }
+    // if (this.taskData.id) {
+    //   this.form = this.initForm(this.taskData);
+    //   this.tags = this.taskData.tags;
+    // }
+    this.service.get$Task().subscribe({
+      next: (res) => {
+        console.log(res);
+        if(res) {
+          this.taskData$ = res;
+          this.editTask = true;
+          this.form = this.initForm(res);
+          this.tags = res.tags;
+        }
+      },
+      error: () => {
+        console.error('erro');
+      }
+    })
   }
 
   initForm(taskData?: TaskModel): FormGroup {
@@ -122,10 +140,16 @@ export class DialogTaskComponent implements OnInit {
     const taskData: TaskModel = this.form.getRawValue();
     taskData.tags = this.tags;
 
-    if (!this.taskData) {
+    // if (!this.editTask) {
+    //   taskData.dataCriacao = moment().format();
+    // } else {
+    //   taskData.id = this.taskData.id;
+    // }
+
+    if (!this.editTask) {
       taskData.dataCriacao = moment().format();
     } else {
-      taskData.id = this.taskData.id;
+      taskData.id = this.taskData$.id;
     }
 
     this.dialogRef.close(taskData);

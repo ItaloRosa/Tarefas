@@ -12,7 +12,7 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of todo; track item) {
-      <mat-card appHighlightMouse cdkDrag class="card-task">
+      <mat-card [appHighlightMouse]="'#F7F7F7'" [defautColor]="'#FFFFFF'" cdkDrag class="card-task">
         <mat-card-header>
           <mat-card-title> {{ item.titulo }} </mat-card-title>
           <mat-card-subtitle class="d-flex">
@@ -52,7 +52,7 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of doing; track item) {
-        <mat-card appHighlightMouse cdkDrag class="card-task">
+        <mat-card [appHighlightMouse]="'#F7F7F7'" [defautColor]="'#FFFFFF'" cdkDrag class="card-task">
           <mat-card-header>
             <mat-card-title> {{ item.titulo }} </mat-card-title>
             <mat-card-subtitle class="d-flex">
@@ -92,7 +92,7 @@
       (cdkDropListDropped)="drop($event)"
     >
       @for (item of done; track item) {
-        <mat-card appHighlightMouse cdkDrag class="card-task">
+        <mat-card [appHighlightMouse]="'#F7F7F7'" [defautColor]="'#FFFFFF'" cdkDrag class="card-task">
           <mat-card-header>
             <mat-card-title> {{ item.titulo }} </mat-card-title>
             <mat-card-subtitle class="d-flex">

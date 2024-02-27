@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environment';
 import { TaskModel } from '../../pages/main/tasks/model/task.model';
@@ -11,6 +11,8 @@ import { TaskModel } from '../../pages/main/tasks/model/task.model';
 })
 export class TaskService {
   private readonly API = environment.apiUrl;
+
+  public $task = new BehaviorSubject<TaskModel | undefined>(undefined);
 
   constructor(private httpClient: HttpClient) {}
 
@@ -40,5 +42,17 @@ export class TaskService {
     });
 
     return this.httpClient.delete(`${this.API}/tasks/${id}`, { headers });
+  }
+
+  get$Task(): Observable<TaskModel | undefined> {
+    return this.$task.asObservable();
+  }
+
+  set$Task(task: TaskModel) {
+    this.$task.next(task);
+  }
+
+  unsubscribe$Task() {
+    this.$task.unsubscribe();
   }
 }

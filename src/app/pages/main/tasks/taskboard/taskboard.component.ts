@@ -94,12 +94,14 @@ export class TaskboardComponent implements OnInit {
   }
 
   editTask(task: TaskModel) {
+    this.taskService.set$Task(task);
+
     const dialogRef = this.dialog.open(DialogTaskComponent, {
       minWidth: '300px',
       minHeight: '300px',
       hasBackdrop: true,
       disableClose: false,
-      data: task,
+      // data: task,
     });
 
     dialogRef.afterClosed().subscribe(result => {
